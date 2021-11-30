@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Show weather - FIR WARSZAWA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+<table class="table table-dark table-hover">
+    <thead>
+    <tr>
+        <th scope="col">ICAO</th>
+        <th scope="col">ATIS</th>
+        <th scope="col">QNH</th>
+        <th scope="col">WIND</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">EPWA</th>
+        <td id="EPWAatis"></td>
+        <td id="EPWAqnh"></td>
+        <td id="EPWAwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPKK</th>
+        <td id="EPKKatis"></td>
+        <td id="EPKKqnh"></td>
+        <td id="EPKKwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPKT</th>
+        <td id="EPKTatis"></td>
+        <td id="EPKTqnh"></td>
+        <td id="EPKTwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPGD</th>
+        <td id="EPGDatis"></td>
+        <td id="EPGDqnh"></td>
+        <td id="EPGDwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPLL</th>
+        <td id="EPLLatis"></td>
+        <td id="EPLLqnh"></td>
+        <td id="EPLLwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPSC</th>
+        <td id="EPSCatis"></td>
+        <td id="EPSCqnh"></td>
+        <td id="EPSCwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPRZ</th>
+        <td id="EPRZatis"></td>
+        <td id="EPRZqnh"></td>
+        <td id="EPRZwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPPO</th>
+        <td id="EPPOatis"></td>
+        <td id="EPPOqnh"></td>
+        <td id="EPPOwind"></td>
+    </tr>
+    <tr>
+        <th scope="row">EPWR</th>
+        <td id="EPWRatis"></td>
+        <td id="EPWRqnh"></td>
+        <td id="EPWRwind"></td>
+    </tr>
+    </tbody>
+    <script>
+        const icao = ['EPWA', 'EPKK', 'EPKT', 'EPGD', 'EPLL', 'EPSC', 'EPRZ', 'EPPO', 'EPWR'];
+        var interval = setInterval(function () {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    let json = JSON.parse(this.responseText);
+                    for (const code of icao)
+                    {
+                        document.querySelector('#'+code+'atis').innerHTML = json[code].atisLetter;
+                        document.querySelector('#'+code+'qnh').innerHTML = json[code].QNH;
+                        document.querySelector('#'+code+'wind').innerHTML = json[code].wind;
+                    }
+                }
+            }
+            xmlhttp.open("GET", "current_weather.php?update", true);
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send();
+        }, 3000);
+    </script>
+
+</table>
+</body>
+</html>
