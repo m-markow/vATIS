@@ -881,61 +881,25 @@ function automaticDepFq($icao, $runway_arrival)
     return $depFq;
 }
 
-function getRunwayReport($metar)
+function getRunwayCC($icao, $runway_arrival)
 {
-        if (substr($metar, -6, 1) != '/'){
-            if (substr($metar, -6, 1) == 1){
-                $rwy_condit = 'damp';
-            }elseif (substr($metar, -6, 1) == 2){
-                $rwy_condit = 'wet';
-            }elseif (substr($metar, -6, 1) == 3){
-                $rwy_condit = 'rime frost';
-            }elseif (substr($metar, -6, 1) == 4){
-                $rwy_condit = 'dry snow';
-            }elseif (substr($metar, -6, 1) == 5){
-                $rwy_condit = 'wet snow';
-            }elseif (substr($metar, -6, 1) == 6){
-                $rwy_condit = 'slush';
-            }elseif (substr($metar, -6, 1) == 7){
-                $rwy_condit = 'ice';
-            }elseif (substr($metar, -6, 1) == 8){
-                $rwy_condit = 'compacted snow';
-            }elseif (substr($metar, -6, 1) == 9){
-                $rwy_condit = 'frozen ruts';
-            }
-        }
+    $a = '';
+    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId=awFxv6ilGq1Fnajvgsy6dYs4W6QN3ln0uS2yh_ZgGRc=');
 
-        if (substr($metar, -2, 2) != '//'){
-            if (substr($metar, -2, 2) == 95){
-                $braking_action = 'good';
-            }elseif (substr($metar, -2, 2) == 94){
-                $braking_action = 'medium good';
-            }elseif (substr($metar, -2, 2) == 93){
-                $braking_action = 'medium';
-            }elseif (substr($metar, -2, 2) == 92){
-                $braking_action = 'medium poor';
-            }elseif (substr($metar, -2, 2) == 91){
-                $braking_action = 'poor';
-            }
-        }
+    preg_match_all('/<pre class="preNotam">([^<]+)<\/pre>/i', $data, $matches);
 
-    if (substr($metar, -10,1) == 'R' && substr($metar, -10,3) != 'R88' && substr($metar, -10,2) !== 'RE')
+    foreach ($matches[0] as $notams)
     {
-        $a = "Runway report: runway ".substr($metar, -9,2).' '.$rwy_condit;
+        if (preg_match('/EP../i', trim($notams))){
+            $expoladed = explode(' ', $notams);
 
-        if (substr($metar, -2, 2) != '//' || substr($metar, -1, 2) < 91){
-            $a .= ' braking action '.$braking_action;
+                if ($expoladed[19] == $icao)
+                {
+                    $a .= 'Runway '.$runway_arrival.' condition codes '.$expoladed[37];
+                }
+
         }
     }
-    elseif(substr($metar, -10,3) == 'R88' && substr($metar, -10,1) !== 'RE')
-    {
-        $a = "Runway report: all runways ";
-        $a .= $rwy_condit;
-        if (substr($metar, -2, 2) != '//' || substr($metar, -1, 2) < 91){
-            $a .= ' braking action '.$braking_action;
-        }
-    }
-
     return $a;
 }
 
@@ -1114,7 +1078,7 @@ $a[] = "QNH";
 $a[] = getQNH($d->getPressure()->getValue(), $d->getIcao());
 
 // Runway reports
-$a[] = getRunwayReport($raw_metar);
+$a[] = getRunwayCC($d->getIcao(), $rwy_arrival);
 
 // Free text, atc information, special prcedures
 if (!isset($_GET['lvp'])) {
