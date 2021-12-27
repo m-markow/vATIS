@@ -883,7 +883,7 @@ function automaticDepFq($icao, $runway_arrival)
 
 function getRunwayCC($icao, $runway_arrival)
 {
-    $a = '';
+    $a = [];
     $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId=awFxv6ilGq1Fnajvgsy6dYs4W6QN3ln0uS2yh_ZgGRc=');
 
     preg_match_all('/<pre class="preNotam">([^<]+)<\/pre>/i', $data, $matches);
@@ -891,16 +891,76 @@ function getRunwayCC($icao, $runway_arrival)
     foreach ($matches[0] as $notams)
     {
         if (preg_match('/EP../i', trim($notams))){
-            $expoladed = explode(' ', $notams);
+            $expoladed = explode(' ', preg_replace('/\s+/', ' ', $notams));
 
-                if ($expoladed[19] == $icao)
+                if ($expoladed[5] == $icao)
                 {
-                    $a .= 'Runway '.$runway_arrival.' condition codes '.$expoladed[37];
+                    $cc = explode('/', $expoladed[8]);
+                    $a[] = ', Runway '.$runway_arrival.' runway condition codes ';
+                    $a[] = $cc[0].', '.$cc[1].', '.$cc[2];
                 }
 
         }
     }
     return $a;
+}
+
+function getRunwayInfo($icao)
+{
+    function contains($str, array $arr)
+    {
+        foreach($arr as $a) {
+            if (stripos($str,$a) !== false) return true;
+        }
+        return false;
+    }
+
+    $conditions = [
+        'COMPACTED',
+        'SNOW',
+        'DRY',
+        'ON', 'TOP', 'OF',
+        'ICE',
+        'FROST',
+        'SLIPPERY',
+        'WET',
+        'SLUSH',
+        'SPECIALLY',
+        'PREPARED',
+        'RUNWAY',
+        'WINTER',
+        'STANDING', 'WATER',
+        'CHEMICALLY', 'TREATED',
+        'LOOSE', 'SAND'
+    ];
+
+    $result = '';
+
+    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId=awFxv6ilGq1Fnajvgsy6dYs4W6QN3ln0uS2yh_ZgGRc=');
+
+    preg_match_all('/<pre class="preNotam">([^<]+)<\/pre>/i', $data, $matches);
+    foreach ($matches[0] as $notams)
+    {
+        if (preg_match('/EP../i', trim($notams))){
+            $expoladed = explode(' ', preg_replace('/\s+/', ' ', $notams));
+
+            if ($expoladed[5] == $icao)
+            {
+                $array = $expoladed[11];
+                for ($i = 12; $i <= count($expoladed); $i++)
+                {
+                    if (contains($expoladed[$i], $conditions)) {
+                        $array .= ' ' . $expoladed[$i];
+                    }else break;
+                }
+                // returning array with format XXX/XXX/XXX
+                $array = explode('/', $array);
+                $result = ',  First part '.strtolower($array[0]).', Second part '.strtolower($array[1]).', Third part '.strtolower($array[2]).'  ';
+            }
+
+        }
+    }
+    return $result;
 }
 
 function getPhoneticLetter($letter)
@@ -1036,6 +1096,11 @@ $a[] = "approach";
 $a[] = "runway";
 $a   = array_merge($a, getRunways($rwy_arrival));
 
+// Runway Condition Codes
+$a = array_merge($a, getRunwayCC($d->getIcao(), $rwy_arrival));
+
+// Each runway part condition
+$a[] = getRunwayInfo($d->getIcao());
 
 // Departures
 $a[] = "Departures runway";
@@ -1077,8 +1142,7 @@ $a   = array_merge($a, getTemperature($d->getDewPointTemperature()->getValue()))
 $a[] = "QNH";
 $a[] = getQNH($d->getPressure()->getValue(), $d->getIcao());
 
-// Runway reports
-$a[] = getRunwayCC($d->getIcao(), $rwy_arrival);
+
 
 // Free text, atc information, special prcedures
 if (!isset($_GET['lvp'])) {
