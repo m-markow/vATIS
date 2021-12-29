@@ -884,8 +884,12 @@ function automaticDepFq($icao, $runway_arrival)
 function getRunwayCC($icao, $runway_arrival)
 {
     $a = [];
-    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId=awFxv6ilGq1Fnajvgsy6dYs4W6QN3ln0uS2yh_ZgGRc=');
+    $data = file_get_contents('https://ibs.rlp.cz/home.do');
+    preg_match_all('/csrfInsert\(([^)]+)\)/i', $data, $matches);
 
+    $csrf = substr($matches[0][0], 23, strlen($matches[0][0]) - 25);
+
+    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId='.$csrf);
     preg_match_all('/<pre class="preNotam">([^<]+)<\/pre>/i', $data, $matches);
 
     foreach ($matches[0] as $notams)
@@ -936,8 +940,11 @@ function getRunwayInfo($icao)
 
     $result = '';
 
-    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId=awFxv6ilGq1Fnajvgsy6dYs4W6QN3ln0uS2yh_ZgGRc=');
+    $data = file_get_contents('https://ibs.rlp.cz/home.do');
+    preg_match_all('/csrfInsert\(([^)]+)\)/i', $data, $matches);
 
+    $csrf = substr($matches[0][0], 23, strlen($matches[0][0]) - 25);
+    $data = file_get_contents('https://ibs.rlp.cz/notam.do?id=notam_snowtam_okoli&anode=notam_snowtam_okoli&csrfpId='.$csrf);
     preg_match_all('/<pre class="preNotam">([^<]+)<\/pre>/i', $data, $matches);
     foreach ($matches[0] as $notams)
     {
