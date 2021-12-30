@@ -708,7 +708,7 @@ function automaticATClereance($icao)
 
 
     if ($a != null) {
-        $clrfq = 'For ATC clearence contact ' . $a;
+        $clrfq = 'For ATC clearance contact ' . $a;
     }else $clrfq = '';
 
     return $clrfq;
