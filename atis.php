@@ -519,7 +519,9 @@ function getATClereance($fq)
 
 function getDepFQ($fq)
 {
-    if ($fq == 130.67 || $fq == 125.45 || $fq == 134.87 || $fq == 134.870 || $fq == 134.875 || $fq == 125.450 || $fq == 132.7 || $fq == 132.705) {
+    $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 127.450, 130.875, 130.625];
+
+    if (in_array($fq, $frequencies)) {
         $a = "When airborne contact Radar on ".$fq;
         }else{
         $a = "When airborne contact Approach on ".$fq;
@@ -563,24 +565,24 @@ function automaticATClereance($icao)
     elseif (in_array(125.050, $frequencies)){
     $a = 125.050;
     }
-    elseif (in_array(134.870, $frequencies)){
-        $a = 134.875;
+    elseif (in_array(120.950, $frequencies)){
+        $a = 120.950;
     }
-    elseif (in_array(123.620, $frequencies)){
+    elseif (in_array(127.450, $frequencies)){
     $a = 123.625;
     }
     elseif (in_array(125.450, $frequencies)){
     $a = 125.450;
     }
-        elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
         }
 
     }
     elseif ($icao == 'EPKK'){
 
 
-    if (in_array(121.970, $frequencies)){
+    if (in_array(121.975, $frequencies)){
         $a = 121.975;
     }
     elseif (in_array(118.100, $frequencies) && in_array('EPKK_GND', $callsigns)){
@@ -589,30 +591,45 @@ function automaticATClereance($icao)
     elseif (in_array(123.250, $frequencies)){
         $a = 123.250;
     }
-    elseif (in_array(121.070, $frequencies)){
+    elseif (in_array(121.075, $frequencies)){
         $a = 121.075;
     }
-    elseif (in_array(123.620, $frequencies)){
-        $a = 123.625;
+    elseif (in_array(134.175, $frequencies)){
+        $a = 134.175;
     }
-        elseif (in_array(125.450, $frequencies)){
-            $a = 125.450;
+        elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
         }
+    elseif (in_array(125.450, $frequencies)){
+        $a = 125.450;
+    }
+    elseif (in_array(130.625, $frequencies)){
+        $a = 130.625;
+    }
 
     }
     elseif ($icao == 'EPGD') {
 
 
-        if (in_array(131.320, $frequencies)) {
+        if (in_array(131.325, $frequencies)) {
             $a = 131.325;
         } elseif (in_array(118.100, $frequencies) && in_array('EPGD_TWR', $callsigns) || in_array('EPGD_T_TWR', $callsigns)) {
             $a = 118.105;
-        } elseif (in_array(127.270, $frequencies)) {
+        } elseif (in_array(127.275, $frequencies)) {
             $a = 127.275;
-        } elseif (in_array(132.700, $frequencies)) {
-            $a = 132.705;
-        } elseif (in_array(125.450, $frequencies)) {
+        } elseif (in_array(129.075, $frequencies)) {
+            $a = 129.075;
+        } elseif (in_array(124.925, $frequencies)) {
+            $a = 124.925;
+        }
+        elseif (in_array(127.450, $frequencies)) {
+            $a = 127.450;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
         }
     }
     elseif ($icao == 'EPKT'){
@@ -623,86 +640,116 @@ function automaticATClereance($icao)
             $a = 129.250;
         }elseif (in_array(135.400, $frequencies)){
             $a = 135.405;
-        }elseif (in_array(121.070, $frequencies)){
+        }elseif (in_array(121.075, $frequencies)){
             $a = 121.075;
-        }elseif (in_array(123.620, $frequencies)){
-            $a = 123.625;
-        }elseif (in_array(125.450, $frequencies)){
+        }
+        elseif (in_array(134.175, $frequencies)){
+            $a = 134.175;
+        }
+        elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPLL'){
 
         if (in_array(120.000, $frequencies)){
             $a = 120.0;
-        }elseif (in_array(124.220, $frequencies)){
+        }elseif (in_array(124.225, $frequencies)){
             $a = 124.225;
         }elseif (in_array(128.800, $frequencies)){
             $a = 128.805;
-        }elseif (in_array(125.050, $frequencies)){
-            $a = 125.050;
-        }elseif (in_array(134.870, $frequencies)){
-            $a = 134.875;
         }
-        elseif (in_array(123.620, $frequencies)){
+        elseif (in_array(125.050, $frequencies)){
+            $a = 125.050;
+        }
+        elseif (in_array(120.950, $frequencies)){
+            $a = 120.950;
+        }
+        elseif (in_array(127.450, $frequencies)){
             $a = 123.625;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
-        elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
         }
+
     }elseif ($icao == 'EPPO'){
 
         if (in_array(121.800, $frequencies)){
             $a = 121.805;
-        }elseif (in_array(119.970, $frequencies)){
+        }elseif (in_array(119.975, $frequencies)){
             $a = 119.975;
-        }elseif (in_array(128.920, $frequencies)){
+        }elseif (in_array(128.925, $frequencies)){
             $a = 128.925;
-        }elseif (in_array(134.870, $frequencies)){
-            $a = 134.875;
-        }elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        }elseif (in_array(134.225, $frequencies)){
+            $a = 134.225;
         }elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPRZ'){
 
         if (in_array(121.800, $frequencies)){
             $a = 121.805;
         }elseif (in_array(126.800, $frequencies)){
             $a = 126.805;
-        }elseif (in_array(123.620, $frequencies)){
+        }elseif (in_array(123.625, $frequencies)){
             $a = 123.625;
-        }elseif (in_array(125.450, $frequencies)){
+        }elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPSC'){
 
         if (in_array(121.250, $frequencies)){
             $a = 121.250;
-        }elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
-        }elseif (in_array(125.450, $frequencies)){
+        }elseif (in_array(127.025, $frequencies)){
+            $a = 127.025;
+        }elseif (in_array(124.925, $frequencies)){
+            $a = 124.925;
+        }
+        elseif (in_array(127.450, $frequencies)) {
+            $a = 127.450;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPWR'){
 
         if (in_array(121.800, $frequencies)){
             $a = 121.805;
         }elseif (in_array(120.250, $frequencies)){
             $a = 120.250;
-        }elseif (in_array(127.220, $frequencies)){
-            $a = 127.225;
-        }elseif (in_array(128.920, $frequencies)){
-            $a = 128.920;
-        }elseif (in_array(134.870, $frequencies)){
-            $a = 134.875;
-        }elseif (in_array(123.620, $frequencies)){
-            $a = 123.625;
+        }elseif (in_array(123.050, $frequencies)){
+            $a = 123.050;
+        }elseif (in_array(128.925, $frequencies)){
+            $a = 128.925;
         }elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
         }
     }
 
@@ -734,39 +781,43 @@ function automaticDepFq($icao, $runway_arrival)
     if ($icao == 'EPWA') {
         if ($runway_arrival == '33')
         {
-            if (in_array(125.050, $frequencies)) {
-                $a = 125.050;
-            }
-            elseif (in_array(128.800, $frequencies)) {
+            if (in_array(128.800, $frequencies)){
                 $a = 128.805;
             }
-            elseif (in_array(123.620, $frequencies)) {
+            elseif (in_array(125.050, $frequencies)){
+                $a = 125.050;
+            }
+            elseif (in_array(120.950, $frequencies)){
+                $a = 120.950;
+            }
+            elseif (in_array(127.450, $frequencies)){
                 $a = 123.625;
-            } elseif (in_array(134.870, $frequencies)) {
-                $a = 134.875;
-            } elseif (in_array(125.450, $frequencies)) {
+            }
+            elseif (in_array(125.450, $frequencies)){
                 $a = 125.450;
-
-            } elseif (in_array(132.700, $frequencies)) {
-                $a = 132.705;
+            }
+            elseif (in_array(130.625, $frequencies)){
+                $a = 130.625;
             }
         }else
         {
-            if (in_array(128.800, $frequencies)) {
-                $a = 128.805;
-            }
-            elseif (in_array(125.050, $frequencies)) {
+            if (in_array(125.050, $frequencies)){
                 $a = 125.050;
             }
-            elseif (in_array(123.620, $frequencies)) {
+            elseif (in_array(128.800, $frequencies)){
+                $a = 128.800;
+            }
+            elseif (in_array(120.950, $frequencies)){
+                $a = 120.950;
+            }
+            elseif (in_array(127.450, $frequencies)){
                 $a = 123.625;
-            } elseif (in_array(134.870, $frequencies)) {
-                $a = 134.875;
-            } elseif (in_array(125.450, $frequencies)) {
+            }
+            elseif (in_array(125.450, $frequencies)){
                 $a = 125.450;
-
-            } elseif (in_array(132.700, $frequencies)) {
-                $a = 132.705;
+            }
+            elseif (in_array(130.625, $frequencies)){
+                $a = 130.625;
             }
         }
 
@@ -774,101 +825,153 @@ function automaticDepFq($icao, $runway_arrival)
 
     } elseif ($icao == 'EPKK') {
 
-        if (in_array(121.070, $frequencies)) {
+        if (in_array(121.075, $frequencies)){
             $a = 121.075;
         }
-     elseif (in_array(123.620, $frequencies)) {
-        $a = 123.625;
-    } elseif (in_array(125.450, $frequencies)) {
-        $a = 125.450;
-    }
+        elseif (in_array(134.175, $frequencies)){
+            $a = 134.175;
+        }
+        elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
+        }
+        elseif (in_array(125.450, $frequencies)){
+            $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
 
 
     } elseif ($icao == 'EPGD') {
 
-        if (in_array(127.270, $frequencies)) {
+        if (in_array(127.275, $frequencies)) {
             $a = 127.275;
-
-        } elseif (in_array(132.700, $frequencies)) {
-            $a = 132.705;
-        } elseif (in_array(125.450, $frequencies)) {
+        } elseif (in_array(129.075, $frequencies)) {
+            $a = 129.075;
+        } elseif (in_array(124.925, $frequencies)) {
+            $a = 124.925;
+        }
+        elseif (in_array(127.450, $frequencies)) {
+            $a = 127.450;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPKT'){
 
         if (in_array(135.400, $frequencies)){
             $a = 135.405;
-        }elseif (in_array(121.070, $frequencies)){
+        }elseif (in_array(121.075, $frequencies)){
             $a = 121.075;
-        }elseif (in_array(123.620, $frequencies)){
-            $a = 123.625;
-        }elseif (in_array(125.450, $frequencies)){
+        }
+        elseif (in_array(134.175, $frequencies)){
+            $a = 134.175;
+        }
+        elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPLL'){
-        if (in_array(124.220, $frequencies)){
+        if (in_array(124.225, $frequencies)){
             $a = 124.225;
         }elseif (in_array(128.800, $frequencies)){
             $a = 128.805;
-        }elseif (in_array(125.050, $frequencies)){
-            $a = 125.050;
-        }elseif (in_array(134.870, $frequencies)){
-            $a = 134.875;
         }
-        elseif (in_array(123.620, $frequencies)){
+        elseif (in_array(125.050, $frequencies)){
+            $a = 125.050;
+        }
+        elseif (in_array(120.950, $frequencies)){
+            $a = 120.950;
+        }
+        elseif (in_array(127.450, $frequencies)){
             $a = 123.625;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
-        elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
         }
+
     }elseif ($icao == 'EPPO'){
-        if (in_array(128.920, $frequencies)){
+        if (in_array(128.925, $frequencies)){
             $a = 128.925;
-        }elseif (in_array(134.870, $frequencies)){
-            $a = 134.875;
-        }elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        }elseif (in_array(134.225, $frequencies)){
+            $a = 134.225;
         }elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPRZ'){
         if (in_array(126.800, $frequencies)){
             $a = 126.805;
-        }elseif (in_array(123.620, $frequencies)){
+        }elseif (in_array(123.625, $frequencies)){
             $a = 123.625;
-        }elseif (in_array(125.450, $frequencies)){
+        }elseif (in_array(124.625, $frequencies)){
+            $a = 124.625;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }elseif ($icao == 'EPSC'){
         if (in_array(121.250, $frequencies)){
             $a = 121.250;
-        }elseif (in_array(132.700, $frequencies)){
-            $a = 132.705;
+        }elseif (in_array(127.025, $frequencies)){
+            $a = 127.025;
+        }elseif (in_array(124.925, $frequencies)){
+            $a = 124.925;
+        }
+        elseif (in_array(127.450, $frequencies)) {
+            $a = 127.450;
+        }
+        elseif (in_array(125.450, $frequencies)){
+            $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
+    }elseif ($icao == 'EPWR'){
+        if (in_array(121.800, $frequencies)){
+            $a = 121.805;
+        }elseif (in_array(120.250, $frequencies)){
+            $a = 120.250;
+        }elseif (in_array(123.050, $frequencies)){
+            $a = 123.050;
+        }elseif (in_array(128.925, $frequencies)){
+            $a = 128.925;
         }elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
-    }elseif ($icao == 'EPWR'){
-    if (in_array(127.220, $frequencies)){
-        $a = 127.225;
-    }elseif (in_array(128.920, $frequencies)){
-        $a = 128.920;
-    }elseif (in_array(134.870, $frequencies)){
-        $a = 134.875;
-    }elseif (in_array(123.620, $frequencies)){
-        $a = 123.625;
-    }elseif (in_array(125.450, $frequencies)){
-        $a = 125.450;
-    }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+
     }
 
 
 
 
     if ($a != null) {
-        if ($a == 132.705 || $a == 125.450 || $a == 134.875 || $a == 123.625) {
+        $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 127.450, 130.875, 130.625];
+        if (in_array($a, $frequencies)) {
             $depFq = "When airborne contact Radar on " . $a;
         }elseif ($a == 121.250 || $a == 126.805 || $a == 124.225){
             $depFq = "When airborne contact Tower on " . $a;
