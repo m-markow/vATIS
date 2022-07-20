@@ -388,6 +388,7 @@ function getAptName($airport)
     elseif ($airport == "EPRZ") $a = "Rzeszow";
     elseif ($airport == "EPSC") $a = "Szczecin";
     elseif ($airport == "EPWR") $a = "Wroclaw";
+    elseif ($airport == 'EPBY') $a = 'Bydgoszcz';
 
     return $a;
 }
@@ -447,6 +448,11 @@ function getArrivalLetter($icao, $runway){
         if ($runway == 29){
             $a = "Uniform";
         }else $a = "Papa";
+    }
+    elseif ($icao == 'EPBY'){
+        if ($runway == 26)
+            $a = 'Tango';
+        else $a = 'Papa';
     }
 
     return $a;
@@ -517,9 +523,14 @@ function getATClereance($fq)
     return $a;
 }
 
+/**
+ * @param $fq - typed in link frequency
+ * @return string
+ * Manual departure frequency
+ */
 function getDepFQ($fq)
 {
-    $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 127.450, 130.875, 130.625];
+    $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 132.700, 130.875, 130.625];
 
     if (in_array($fq, $frequencies)) {
         $a = "When airborne contact Radar on ".$fq;
@@ -568,8 +579,8 @@ function automaticATClereance($icao)
     elseif (in_array(120.950, $frequencies)){
         $a = 120.950;
     }
-    elseif (in_array(127.450, $frequencies)){
-    $a = 123.625;
+    elseif (in_array(132.700, $frequencies)){
+    $a = 132.700;
     }
     elseif (in_array(125.450, $frequencies)){
     $a = 125.450;
@@ -622,8 +633,8 @@ function automaticATClereance($icao)
         } elseif (in_array(124.925, $frequencies)) {
             $a = 124.925;
         }
-        elseif (in_array(127.450, $frequencies)) {
-            $a = 127.450;
+        elseif (in_array(132.700, $frequencies)) {
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -671,8 +682,8 @@ function automaticATClereance($icao)
         elseif (in_array(120.950, $frequencies)){
             $a = 120.950;
         }
-        elseif (in_array(127.450, $frequencies)){
-            $a = 123.625;
+        elseif (in_array(132.700, $frequencies)){
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -725,8 +736,8 @@ function automaticATClereance($icao)
         }elseif (in_array(124.925, $frequencies)){
             $a = 124.925;
         }
-        elseif (in_array(127.450, $frequencies)) {
-            $a = 127.450;
+        elseif (in_array(132.700, $frequencies)) {
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -746,6 +757,26 @@ function automaticATClereance($icao)
         }elseif (in_array(128.925, $frequencies)){
             $a = 128.925;
         }elseif (in_array(125.450, $frequencies)){
+            $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
+    }
+    elseif ($icao == 'EPBY'){
+
+        if (in_array(131.000, $frequencies)){
+            $a = 131.000;
+        }elseif (in_array(127.275, $frequencies)){
+            $a = 127.275;
+        }elseif (in_array(129.075, $frequencies)){
+            $a = 129.075;
+        }elseif (in_array(124.925, $frequencies)){
+            $a = 124.925;
+        }elseif (in_array(132.700, $frequencies)){
+            $a = 132.700;
+        }
+        elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
         }
         elseif (in_array(130.625, $frequencies)){
@@ -790,8 +821,8 @@ function automaticDepFq($icao, $runway_arrival)
             elseif (in_array(120.950, $frequencies)){
                 $a = 120.950;
             }
-            elseif (in_array(127.450, $frequencies)){
-                $a = 123.625;
+            elseif (in_array(132.700, $frequencies)){
+                $a = 132.700;
             }
             elseif (in_array(125.450, $frequencies)){
                 $a = 125.450;
@@ -810,8 +841,8 @@ function automaticDepFq($icao, $runway_arrival)
             elseif (in_array(120.950, $frequencies)){
                 $a = 120.950;
             }
-            elseif (in_array(127.450, $frequencies)){
-                $a = 123.625;
+            elseif (in_array(132.700, $frequencies)){
+                $a = 132.700;
             }
             elseif (in_array(125.450, $frequencies)){
                 $a = 125.450;
@@ -851,8 +882,8 @@ function automaticDepFq($icao, $runway_arrival)
         } elseif (in_array(124.925, $frequencies)) {
             $a = 124.925;
         }
-        elseif (in_array(127.450, $frequencies)) {
-            $a = 127.450;
+        elseif (in_array(132.700, $frequencies)) {
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -893,8 +924,8 @@ function automaticDepFq($icao, $runway_arrival)
         elseif (in_array(120.950, $frequencies)){
             $a = 120.950;
         }
-        elseif (in_array(127.450, $frequencies)){
-            $a = 123.625;
+        elseif (in_array(132.700, $frequencies)){
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -938,8 +969,8 @@ function automaticDepFq($icao, $runway_arrival)
         }elseif (in_array(124.925, $frequencies)){
             $a = 124.925;
         }
-        elseif (in_array(127.450, $frequencies)) {
-            $a = 127.450;
+        elseif (in_array(132.700, $frequencies)) {
+            $a = 132.700;
         }
         elseif (in_array(125.450, $frequencies)){
             $a = 125.450;
@@ -963,17 +994,37 @@ function automaticDepFq($icao, $runway_arrival)
         elseif (in_array(130.625, $frequencies)){
             $a = 130.625;
         }
+        
+    }
+    elseif ($icao == 'EPBY'){
 
+        if (in_array(131.000, $frequencies)){
+            $a = 131.000;
+        }elseif (in_array(127.275, $frequencies)){
+            $a = 127.275;
+        }elseif (in_array(129.075, $frequencies)){
+            $a = 129.075;
+        }elseif (in_array(124.925, $frequencies)){
+            $a = 124.925;
+        }elseif (in_array(132.700, $frequencies)){
+            $a = 132.700;
+        }
+        elseif (in_array(125.450, $frequencies)){
+            $a = 125.450;
+        }
+        elseif (in_array(130.625, $frequencies)){
+            $a = 130.625;
+        }
     }
 
 
 
 
     if ($a != null) {
-        $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 127.450, 130.875, 130.625];
+        $frequencies = [125.450, 134.225, 133.475, 120.950, 124.625, 134.175, 123.625, 124.925, 129.075, 127.025, 132.700, 130.875, 130.625];
         if (in_array($a, $frequencies)) {
             $depFq = "When airborne contact Radar on " . $a;
-        }elseif ($a == 121.250 || $a == 126.805 || $a == 124.225){
+        }elseif ($a == 121.250 || $a == 126.805 || $a == 124.225 || $a == 131.000){
             $depFq = "When airborne contact Tower on " . $a;
         }
         else {
@@ -1156,12 +1207,12 @@ function getPhoneticLetter($letter)
 }
 
 
-    $raw_metar   = isset($_GET["metar"]) ? $_GET["metar"] : null;
-    $rwy_arrival = isset($_GET["arr"])   ? $_GET["arr"]   : null;
-    $rwy_depart  = isset($_GET["dep"])   ? $_GET["dep"]   : null;
-    $app_type    = isset($_GET["app"])   ? $_GET["app"]   : null;
-    $atis_letter = isset($_GET["info"])  ? $_GET["info"]  : null;
-    $app_spec_type = isset($_GET['app_letter']) ? $_GET['app_letter'] : null;
+    $raw_metar   = $_GET["metar"] ?? null;
+    $rwy_arrival = $_GET["arr"] ?? null;
+    $rwy_depart  = $_GET["dep"] ?? null;
+    $app_type    = $_GET["app"] ?? null;
+    $atis_letter = $_GET["info"] ?? null;
+    $app_spec_type = $_GET['app_letter'] ?? null;
 
 
 $a = array();
